@@ -5,6 +5,8 @@
 # Implante un système de file stockées dans des fichiers
 ########################################################
 
+from os import mkdir, remove, path
+
 class FileQueue:
     def __backup_init__(self, name):
         with open(name + "_name", "r") as f:
@@ -19,9 +21,9 @@ class FileQueue:
         f = open(self.cou, "r")
         f.close()
 
-    def __init__(self, name, backup=False):
+    def __init__(self, name):
         assert type(name) == str
-        if backup:
+        if path.isfile(name + "_name"):
             self.__backup_init__(name)
             return
         self.name = name

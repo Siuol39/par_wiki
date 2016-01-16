@@ -29,7 +29,9 @@ def list_links(page):
     pages = []
     for i in t:
         s = up_to(source, i+15, "\"")
-        if not ":" in s and not "#" in s:
+        if not ":" in s and not "#" in s\
+           and not "<" in s and not ">" in s\
+           and not "=" in s:
             pages.append(s)
     pages = list(set(pages))
     return pages
