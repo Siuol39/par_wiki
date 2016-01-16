@@ -8,12 +8,17 @@ from manage_visited import HashFile
 import urllib.error
 
 INIT = "Marie_Dorin-Habert"
+FILE = "visited"
 
-def save(page):
+def save_hsh(page):
     V = HashFile("visited")
     V.put(page)
 
-def main(f = save, init = None):
+def save_file(page):
+    with open(FILE, "a") as f:
+        f.write(page + "\n")
+
+def main(f = save_file, init = None):
     q = FileQueue("to_visit")
     c = HashFile("colored")
 
