@@ -59,3 +59,7 @@ docs/_build/
 target/
 
 *~
+*_name
+*_cou
+*_ret
+*_add

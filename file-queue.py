@@ -9,7 +9,7 @@ class FileQueue:
     def __init__(self, name):
         assert type(name) == str
         self.name = name
-        with open(name, "w") as f:
+        with open(name+"_name", "w") as f:
             f.write(name)
         for t in [("_add", ""), ("_ret", ""), ("_cou", "0")]:
             f = open(name + t[0], "w")
