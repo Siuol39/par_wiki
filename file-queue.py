@@ -6,8 +6,24 @@
 ########################################################
 
 class FileQueue:
-    def __init__(self, name):
+    def __backup_init__(self, name):
+        with open(name + "_name", "r") as f:
+            self.name = f.readline()
+        self.add = self.name + "_add"
+        self.ret = self.name + "_ret"
+        self.cou = self.name + "_cou"
+        f = open(self.add, "r")
+        f.close()
+        f = open(self.ret, "r")
+        f.close()
+        f = open(self.cou, "r")
+        f.close()
+
+    def __init__(self, name, backup=False):
         assert type(name) == str
+        if backup:
+            self.__backup_init__(name)
+            return
         self.name = name
         with open(name+"_name", "w") as f:
             f.write(name)
