@@ -18,7 +18,7 @@ def up_to(s, i, c):
     return "".join(t)
 
 def list_links(page):
-    page = "Temple_d%27Amon_%28Siwa%29"
+    #page = "Temple_d%27Amon_%28Siwa%29"
     url = url_of_page(page)
     source = u.urlopen(url).read().decode("utf-8")
     i = source.find("<body ")
