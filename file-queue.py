@@ -25,7 +25,7 @@ class FileQueue:
             self.__backup_init__(name)
             return
         self.name = name
-        with open(name+"_name", "w") as f:
+        with open(name + "_name", "w") as f:
             f.write(name)
         for t in [("_add", ""), ("_ret", ""), ("_cou", "0")]:
             f = open(name + t[0], "w")
