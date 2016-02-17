@@ -8,7 +8,7 @@
 from os import mkdir, remove, path
 
 class FileQueue:
-    def __backup_init__(self, name):
+    def _backup_init(self, name):
         with open(name + "_name", "r") as f:
             self.name = f.readline()
         self.add = self.name + "_add"
@@ -24,7 +24,7 @@ class FileQueue:
     def __init__(self, name):
         assert type(name) == str
         if path.isfile(name + "_name"):
-            self.__backup_init__(name)
+            self._backup_init(name)
             return
         self.name = name
         with open(name + "_name", "w") as f:
@@ -37,37 +37,37 @@ class FileQueue:
         self.ret = self.name + "_ret"
         self.cou = self.name + "_cou"
 
-    def __file_is_empty__(self, s):
+    def _file_is_empty(self, s):
         with open(s, "r") as f:
             return f.readlines() == []
 
-    def __end_of_ret__(self):
+    def _end_of_ret(self):
         with open(self.cou, "r") as f:
             c = int(f.readline())
         with open(self.ret, "r") as f:
             n = len(f.readlines())
         return c >= n
 
-    def __clear_ret__(self):
+    def _clear_ret(self):
         with open(self.ret, "w") as f:
             f.write("")
         with open(self.cou, "w") as f:
             f.write("0")
 
-    def __clear_file__(self, s):
+    def _clear_file(self, s):
         with open(s, "w") as f:
             f.write("")
 
-    def __return_queue__(self):
+    def _return_queue(self):
         with open(self.add, "r") as fa:
             with open(self.ret, "w") as fr:
                 for l in fa:
                     fr.write(l)
-        self.__clear_file__(self.add)
+        self._clear_file(self.add)
 
     def is_empty(self):
-        return self.__end_of_ret__() and\
-            self.__file_is_empty__(self.add)
+        return self._end_of_ret() and\
+            self._file_is_empty(self.add)
 
     def put(self, s):
         with open(self.add, "a") as f:
@@ -76,9 +76,9 @@ class FileQueue:
 
     def rem(self):
         assert not self.is_empty()
-        if self.__end_of_ret__():
-            self.__clear_ret__()
-            self.__return_queue__()
+        if self._end_of_ret():
+            self._clear_ret()
+            self._return_queue()
         with open(self.cou, "r") as f:
             n = int(f.readline())
         with open(self.cou, "w") as f:
