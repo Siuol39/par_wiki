@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from file_queue import FileQueue
+from ram_queue import RAMQueue
 from visit_page import list_links
 from manage_visited import HashFile
 
@@ -25,30 +25,27 @@ def color_ram(page, colored):
     colored.append(page)
     return
 
-def visit(page):
-    color(page)
-    return list_links(page)
+def is_colored(page, colored):
+    return page in colored
 
-def main(f = save_file, init = None):
-    q = FileQueue("to_visit")
-    c = HashFile("colored")
-
-    if init != None:
-        q.put(init)
-        c.put(init)
+def main(f = save_file, init = INIT):
+    q = RAMQueue() # queuing pages
+    c = [] # colored pages
+    q.put(init)
+    color_ram(init, c)
 
     stopped = False
 
     while not q.is_empty() and not stopped:
         try:
-            page = q.rem()
+            page = q.get()
             f(page)
             print(page)
             t = list_links(page)
             for p in t:
-                if not c.contains(p):
+                if not is_colored(p, c):
                     print("    " + p)
-                    c.put(p)
+                    color_ram(p, c)
                     q.put(p)
         except KeyboardInterrupt:
             stopped = True

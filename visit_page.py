@@ -20,13 +20,17 @@ def up_to(s, i, c):
 
 def list_links(page):
     #page = "Temple_d%27Amon_%28Siwa%29"
+    print("  downloading " + page + "...")
     url = url_of_page(page)
+    print("  decoding " + page + " as utf-8...")
     source = u.urlopen(url).read().decode("utf-8")
+    print("  finding links...")
     i = source.find("<body ")
     t = []
     while i != -1:
         i = source.find("<a href=\"/wiki/", i+1)
         t.append(i)
+    print("  sorting links...")
     pages = []
     for i in t:
         s = up_to(source, i+15, "\"")
@@ -34,5 +38,7 @@ def list_links(page):
            and not "<" in s and not ">" in s\
            and not "=" in s:
             pages.append(s)
+    print("  removing doubles...")
     pages = list(set(pages))
+    print("  done!")
     return pages
