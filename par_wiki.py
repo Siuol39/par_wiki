@@ -13,10 +13,21 @@ FILE = "visited"
 def save_hsh(page):
     V = HashFile("visited")
     V.put(page)
+    return
 
 def save_file(page):
     with open(FILE, "a") as f:
         f.write(page + "\n")
+    return
+
+def color_ram(page, colored):
+    """colored : list of pages"""
+    colored.append(page)
+    return
+
+def visit(page):
+    color(page)
+    return list_links(page)
 
 def main(f = save_file, init = None):
     q = FileQueue("to_visit")

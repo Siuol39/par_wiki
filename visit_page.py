@@ -10,6 +10,7 @@ def url_of_page(page):
     return s + page
 
 def up_to(s, i, c):
+    """Il faudrait commenter, je ne sais plus ce que ça fait."""
     t = []
     k = i
     while s[k] != c:
