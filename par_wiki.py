@@ -20,19 +20,28 @@ def save_file(page):
         f.write(page + "\n")
     return
 
-def color_ram(page, colored):
-    """colored : list of pages"""
-    colored.append(page)
+def color(page, colored):
+    """colored : dict of pages
+    {hash(a) : [a], hash(b) : [b, b']}
+
+    """
+    h = hash(page)
+    if h in colored:
+        colored[h].append(page)
+    else:
+        colored[h] = [page]
     return
 
 def is_colored(page, colored):
-    return page in colored
+    """  O(1) !!  """
+    h = hash(page)
+    return (h in colored) and (page in colored[h])
 
 def main(f = save_file, init = INIT):
     q = RAMQueue() # queuing pages
-    c = [] # colored pages
+    c = {} # colored pages
     q.put(init)
-    color_ram(init, c)
+    color(init, c)
 
     stopped = False
 
@@ -45,7 +54,7 @@ def main(f = save_file, init = INIT):
             for p in t:
                 if not is_colored(p, c):
                     print("    " + p)
-                    color_ram(p, c)
+                    color(p, c)
                     q.put(p)
         except KeyboardInterrupt:
             stopped = True
