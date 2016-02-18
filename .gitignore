@@ -63,6 +63,7 @@ target/
 *_cou
 *_ret
 *_add
+colored
 colored/
 visited
 visited/

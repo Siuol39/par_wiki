@@ -25,6 +25,9 @@ def color(page, colored):
     {hash(a) : [a], hash(b) : [b, b']}
 
     """
+    with open("colored", "a") as f: # debug
+        f.write(page)
+        f.write("\n")
     h = hash(page)
     if h in colored:
         colored[h].append(page)
@@ -61,3 +64,6 @@ def main(f = save_file, init = INIT):
         except urllib.error.HTTPError:
             stopped = True
             print(page)
+
+if __name__ == "__main__":
+    main()
